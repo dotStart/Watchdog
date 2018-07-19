@@ -6,6 +6,7 @@ DEP := $(shell command -v dep 2> /dev/null)
 GIT := $(shell command -v git 2> /dev/null)
 GO := $(shell command -v go 2> /dev/null)
 YARN := $(shell command -v yarn 2> /dev/null)
+ZIP := $(shell command -v zip 2> /dev/null)
 
 LDFLAGS :=-ldflags "-X github.com/dotStart/Watchdog/metadata.version=${APPLICATION_VERSION} -X github.com/dotStart/Watchdog/metadata.commitHash=${COMMIT_HASH} -X \"github.com/dotStart/Watchdog/metadata.buildTimstampRaw=${BUILD_TIMESTAMP}\""
 PLATFORMS := darwin/386 darwin/amd64 linux/386 linux/amd64 linux/arm windows/386/.exe windows/amd64/.exe
@@ -53,6 +54,12 @@ ifndef YARN
 	$(error "yarn is unavailable")
 endif
 	@echo $(YARN)
+	@echo -n "Checking for zip ... "
+ifndef ZIP
+	@echo "Not Found"
+else
+	@echo $(ZIP)
+endif
 	@echo ""
 
 .ONESHELL:
@@ -83,5 +90,9 @@ $(PLATFORMS):
 	@echo "==> Building for ${os} (${arch})"
 	@export GOOS=$(os); export GOARCH=$(arch); $(GO) build -v ${LDFLAGS} -o build/$(os)-$(arch)/watchdog$(ext)
 	@echo ""
+ifdef ZIP
+	@$(ZIP) build/watchdog-$(APPLICATION_VERSION)-$(os)-$(arch).zip build($(os)-$(arch)/watchdog$(ext)
+	@echo ""
+endif
 
 .PHONY: all
