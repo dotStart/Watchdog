@@ -104,6 +104,11 @@ func (c *ServerCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
     return 1
   }
 
+  if c.flagCfgPath == "" {
+    fmt.Fprintf(os.Stderr, "-config parameter is required")
+    return 1
+  }
+
   fmt.Printf("==> Watchdog Configuration:\n\n")
   fmt.Printf("      Bind Address: %s\n", c.flagBindAddr)
   fmt.Printf("         Log Level: %s\n", c.flagLogLevel)
