@@ -16,7 +16,7 @@ build:
   script:
     - make
   after_script:
-    - cp -r build/ $CI_PROJECT_DIR/
+    - cp -r /go/src/github.com/dotStart/$CI_PROJECT_NAME/build/ $CI_PROJECT_DIR/
     - cd $CI_PROJECT_DIR/
   artifacts:
     paths:
