@@ -1,0 +1,12 @@
+{
+  "name": "watchdog",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Johannes Donath",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "semantic-ui-css": "^2.3.3"
+  }
+}

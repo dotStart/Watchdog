@@ -1,0 +1,15 @@
+{
+  "service": {
+    "name": "service-a",
+    "port": 46624,
+    "checks": [
+      {
+        "id": "http",
+        "name": "Web Interface",
+        "http": "http://localhost:46624",
+        "interval": "30s",
+        "timeout": "2s"
+      }
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>{{ .site.DisplayName }} Status</title>
+    <link rel="stylesheet" type="text/css" href="3rdParty/semantic.min.css" />
+  </head>
+  <body>
+    <header class="ui very padded basic segment">
+      <section class="ui container">
+      {{ if .images.Logo }}
+        <img class="ui medium image" src="logo.png" alt="{{ .site.DisplayName }}" />
+      {{ else }}
+        <h1 class="ui header">{{ .site.DisplayName }}</h1>
+      {{ end }}
+      </section>
+    </header>
+    <main class="ui very padded basic segment">
+      <section class="ui container">
+      {{ if eq .globalState 0 }}
+        <section class="ui inverted grey segment">
+          <h3 class="ui inverted header">Some status information is currently unavailable</h3>
+        </section>
+      {{ end }}
+      {{ if eq .globalState 1 }}
+        <section class="ui inverted green segment">
+          <h3 class="ui inverted header">All Systems Operational</h3>
+        </section>
+      {{ end }}
+      {{ if eq .globalState 2 }}
+        <section class="ui inverted orange segment">
+          <h3 class="ui inverted header">Some service functionality is degraded</h3>
+        </section>
+      {{ end }}
+      {{ if eq .globalState 3 }}
+        <section class="ui inverted red segment">
+          <h3 class="ui inverted header">All services have failed</h3>
+        </section>
+      {{ end }}
+      {{ if eq .globalState 4 }}
+        <section class="ui inverted blue segment">
+          <h3 class="ui inverted header">Maintenance in progress - Some service functionality may be
+            degraded</h3>
+        </section>
+      {{ end }}
+
+        <div class="ui segments">
+        {{ $state := .state }}
+        {{ range $i, $service := .site.Services }}
+          <section id="service-{{ $service.Id }}" class="ui segment">
+            <div class="ui equal width middle aligned grid">
+              <div class="column">
+                <h4 class="ui header">{{ $service.DisplayName }}</h4>
+              </div>
+              <div class="right aligned column">
+              {{ if eq (index $state $service.Id) 0 }}
+                <h5 class="ui grey header">Unknown</h5>
+              {{ end }}
+              {{ if eq (index $state $service.Id) 1 }}
+                <h5 class="ui green header">Operational</h5>
+              {{ end }}
+              {{ if eq (index $state $service.Id) 2 }}
+                <h5 class="ui orange header">Degraded</h5>
+              {{ end }}
+              {{ if eq (index $state $service.Id) 3 }}
+                <h5 class="ui red header">Failed</h5>
+              {{ end }}
+              {{ if eq (index $state $service.Id) 4 }}
+                <h5 class="ui orange header">Maintenance</h5>
+              {{ end }}
+              </div>
+            </div>
+          </section>
+        {{ end }}
+        </div>
+      </section>
+    </main>
+    <footer class="ui very padded basic segment">
+      <div class="ui center aligned container">
+        <div class="ui horizontal link list">
+          <a href="https://doStart.github.io/Watchdog" class="item">Powered by Watchdog
+            v{{ .version }}</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

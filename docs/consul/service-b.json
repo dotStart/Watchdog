@@ -1,0 +1,15 @@
+{
+  "service": {
+    "name": "service-b",
+    "port": 1337,
+    "checks": [
+      {
+        "id": "tcp",
+        "name": "TCP Port",
+        "tcp": "localhost:46624",
+        "interval": "30s",
+        "timeout": "2s"
+      }
+    ]
+  }
+}
