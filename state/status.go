@@ -16,7 +16,9 @@
  */
 package state
 
-import "github.com/hashicorp/consul/api"
+import (
+  "github.com/hashicorp/consul/api"
+)
 
 type ServiceStatus uint8
 
@@ -54,10 +56,10 @@ func SelectStatus(a ServiceStatus, b ServiceStatus) ServiceStatus {
   return b
 }
 
-func OverallStatus(status ...ServiceStatus) ServiceStatus {
+func OverallStatus(stateMap map[string]ServiceStatus) ServiceStatus {
   failCount := 0
   s := Unknown
-  for _, state := range status {
+  for _, state := range stateMap {
     if state == Unknown {
       return Unknown
     }
@@ -68,7 +70,7 @@ func OverallStatus(status ...ServiceStatus) ServiceStatus {
     }
   }
 
-  if failCount == len(status) {
+  if failCount == len(stateMap) {
     return Failed
   }
   if failCount != 0 && s == Operational {

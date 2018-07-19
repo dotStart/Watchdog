@@ -33,11 +33,7 @@ func (s *Server) handleIndex(ctx *gin.Context) {
   }
 
   stateMap := s.stateMgr.GetServiceStatus(site)
-  states := make([]state.ServiceStatus, len(stateMap))
-  for _, stat := range stateMap {
-    states = append(states, stat)
-  }
-  globalState := state.OverallStatus(states...)
+  globalState := state.OverallStatus(stateMap)
 
   ctx.HTML(http.StatusOK, "index.html", &gin.H{
     "site": site,
